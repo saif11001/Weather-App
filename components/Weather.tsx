@@ -172,7 +172,7 @@ export default function Weather() {
                 </div>
             )}
 
-            <div className="w-full max-w-sm rounded-3xl p-4 sm:p-5 bg-[#f6f7fc] dark:bg-gradient-to-b dark:from-[#1c2340] dark:to-[#10131f] shadow-lg border border-slate-200/60 dark:border-white/5 transition-colors">
+            <div className="w-full max-w-sm rounded-3xl p-4 sm:p-5 bg-[#f6f7fc] dark:bg-linear-to-b dark:from-[#1c2340] dark:to-[#10131f] shadow-lg border border-slate-200/60 dark:border-white/5 transition-colors">
                 <div className="flex items-center justify-between mb-3">
                     <h2 className="text-base font-semibold text-slate-800 dark:text-white">Weather</h2>
                     <ThemeToggle />
@@ -240,7 +240,7 @@ export default function Weather() {
                                 {hourly.map((h, i) => (
                                     <div
                                         key={i}
-                                        className="flex flex-col items-center gap-1 bg-white dark:bg-white/5 rounded-2xl px-2 py-2 min-w-[52px] shrink-0"
+                                        className="flex flex-col items-center gap-1 bg-white dark:bg-white/5 rounded-2xl px-2 py-2 min-w-13 shrink-0"
                                     >
                                         <span className="text-[10px] text-slate-500 dark:text-slate-400">{h.time}</span>
                                         <IconBadge icon={h.icon} size="w-7 h-7" imgSize="w-4 h-4" />
