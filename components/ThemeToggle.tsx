@@ -6,7 +6,13 @@ export default function ThemeToggle() {
     const [isDark, setIsDark] = useState(false);
 
     useEffect(() => {
-        const saved = localStorage.getItem("theme");
+        // localStorage can throw on iOS Safari (e.g. "Block All Cookies")
+        let saved: string | null = null;
+        try {
+            saved = localStorage.getItem("theme");
+        } catch {
+            saved = null;
+        }
         const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
         const shouldBeDark = saved === "dark" || (!saved && prefersDark);
 
@@ -18,7 +24,11 @@ export default function ThemeToggle() {
         const newIsDark = !isDark;
         setIsDark(newIsDark);
         document.documentElement.classList.toggle("dark", newIsDark);
-        localStorage.setItem("theme", newIsDark ? "dark" : "light");
+        try {
+            localStorage.setItem("theme", newIsDark ? "dark" : "light");
+        } catch {
+            /* ignore */
+        }
     };
 
     return (
