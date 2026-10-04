@@ -1,8 +1,7 @@
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
 
 export const metadata = {
-    title: "Page not found | Saif El-Deen",
+    title: "Page not found | Weather App",
 };
 
 function LostMonster() {
@@ -11,7 +10,7 @@ function LostMonster() {
             viewBox="0 0 300 350"
             role="img"
             aria-label="A fluffy monster scratching its head, looking lost"
-            className="monster-float w-52 text-accent sm:w-64"
+            className="monster-float w-52 text-indigo-400 dark:text-[#a7d2d6] sm:w-64"
         >
             <defs>
                 {/* rough edges = fur */}
@@ -121,11 +120,11 @@ function LostMonster() {
 
 export default function NotFound() {
     return (
-        <main className="relative flex min-h-[calc(100dvh-4rem)] flex-col items-center justify-center overflow-hidden bg-linear-to-b from-accent/15 via-accent/5 to-background px-4 py-12 sm:min-h-[calc(100dvh-5rem)]">
+        <main className="relative flex min-h-dvh flex-col items-center justify-center overflow-hidden bg-linear-to-b from-indigo-200/70 via-indigo-100/40 to-[#eef0fa] px-4 py-12 dark:from-[#1c2340] dark:via-[#141a30] dark:to-slate-950">
             {/* big 404 behind everything */}
             <div
                 aria-hidden
-                className="pointer-events-none absolute inset-x-0 top-6 flex select-none items-start justify-center gap-[2vw] font-serif text-[clamp(9rem,34vw,32rem)] leading-none font-bold text-background/80 sm:top-10"
+                className="pointer-events-none absolute inset-x-0 top-6 flex select-none items-start justify-center gap-[2vw] text-[clamp(9rem,34vw,32rem)] leading-none font-bold text-white/70 dark:text-white/5 sm:top-10"
             >
                 <span>4</span>
                 <span>0</span>
@@ -135,29 +134,42 @@ export default function NotFound() {
             {/* soft clouds */}
             <div
                 aria-hidden
-                className="pointer-events-none absolute -bottom-10 left-[-10%] h-40 w-[55%] rounded-full bg-background/70 blur-2xl"
+                className="pointer-events-none absolute -bottom-10 left-[-10%] h-40 w-[55%] rounded-full bg-white/70 blur-2xl dark:bg-white/5"
             />
             <div
                 aria-hidden
-                className="pointer-events-none absolute -bottom-12 right-[-10%] h-44 w-[60%] rounded-full bg-background/80 blur-2xl"
+                className="pointer-events-none absolute -bottom-12 right-[-10%] h-44 w-[60%] rounded-full bg-white/80 blur-2xl dark:bg-white/5"
             />
 
             {/* content */}
             <div className="relative z-10 mt-10 flex flex-col items-center text-center sm:mt-14">
                 <LostMonster />
 
-                <h1 className="mt-2 font-serif text-2xl leading-tight font-bold sm:text-3xl lg:text-4xl">
+                <h1 className="mt-2 text-2xl leading-tight font-bold text-slate-800 sm:text-3xl lg:text-4xl dark:text-white">
                     Oops, I think we&apos;re lost
                 </h1>
-                <p className="mt-2 text-sm text-muted sm:text-base">
+                <p className="mt-2 text-sm text-slate-500 sm:text-base dark:text-slate-400">
                     Let&apos;s get you back to somewhere familiar...
                 </p>
 
                 <Link
                     href="/"
-                    className="mt-6 inline-flex items-center gap-1.5 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition hover:scale-[1.02] hover:opacity-90 active:scale-[0.98]"
+                    className="mt-6 inline-flex items-center gap-1.5 rounded-full bg-slate-800 px-5 py-2.5 text-sm font-semibold text-white transition dark:bg-white dark:text-slate-900 hover:scale-[1.02] hover:opacity-90 active:scale-[0.98]"
                 >
-                    <ArrowLeft size={16} />
+                    <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        aria-hidden
+                    >
+                        <path d="m12 19-7-7 7-7" />
+                        <path d="M19 12H5" />
+                    </svg>
                     Back to home
                 </Link>
             </div>
