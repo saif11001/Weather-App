@@ -1,8 +1,6 @@
 import type { DailyItem, HourlyItem, WeatherData, WeatherResult } from "../types/weather";
 import { getWeatherIcon } from "./weatherIcons";
 
-const API_BASE = "https://api.openweathermap.org/data/2.5";
-
 // An error whose message is safe to show to the user
 export class WeatherError extends Error {}
 
@@ -62,34 +60,34 @@ function buildDaily(list: ForecastItem[], tz: number): DailyItem[] {
         }));
 }
 
-// Fetches current weather + forecast for a city.
+// Fetches current weather + forecast for a city through our own /api/weather route
+// (the OpenWeatherMap key lives on the server, not in the browser).
 // Throws WeatherError (user-friendly message) when the API answers with an error;
 // network problems are thrown as normal errors.
 export async function fetchWeather(cityName: string): Promise<WeatherResult> {
-    const apiKey = process.env.NEXT_PUBLIC_WEATHER_API_KEY;
-    const q = encodeURIComponent(cityName);
+    const res = await fetch(`/api/weather?city=${encodeURIComponent(cityName)}`);
 
-    const [currentRes, forecastRes] = await Promise.all([
-        fetch(`${API_BASE}/weather?q=${q}&units=metric&appid=${apiKey}`),
-        fetch(`${API_BASE}/forecast?q=${q}&units=metric&appid=${apiKey}`),
-    ]);
-
-    const currentData = await currentRes.json();
-    const forecastData = await forecastRes.json();
-
-    if (!currentRes.ok || !forecastRes.ok) {
-        throw new WeatherError(
-            String(currentData.cod) === "404" || String(forecastData.cod) === "404"
-                ? "City not found, try again."
-                : "Something went wrong, try again."
-        );
+    if (res.status === 404) {
+        throw new WeatherError("City not found, try again.");
     }
 
-    const tz: number = forecastData.city?.timezone ?? 0;
-    const list = forecastData.list as ForecastItem[];
+    let data: any = null;
+    try {
+        data = await res.json();
+    } catch {
+        data = null;
+    }
+
+    if (!res.ok || !data) {
+        throw new WeatherError("Something went wrong, try again.");
+    }
+
+    const { current, forecast } = data;
+    const tz: number = forecast.city?.timezone ?? 0;
+    const list = forecast.list as ForecastItem[];
 
     return {
-        current: buildCurrent(currentData),
+        current: buildCurrent(current),
         hourly: buildHourly(list, tz),
         daily: buildDaily(list, tz),
     };
